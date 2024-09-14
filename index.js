@@ -1,79 +1,67 @@
+const { readdirSync } = require('fs');
 const express = require('express');
-const multer = require('multer');
-const path = require('path');
-const fs = require('fs');
-
-
-// path exist
-const uploadDir = path.join(__dirname, 'uploads');
-if (!fs.existsSync(uploadDir)) {
-  fs.mkdirSync(uploadDir);
-}
-
 const app = express();
-const port = process.env.PORT || 5000;
+
+const cors = require('cors');
+const mongoose = require('mongoose');
+const morgan = require('morgan');
+const helmet = require('helmet');
+const hpp = require('hpp');
+
+
 require('dotenv').config();
 
-// file name and destination ===========================
+const port = process.env.PORT || 5000;
 
-const storage = multer.diskStorage({
-  // destination: function (req, file, cb) {
-  //   cb(null, uploadDir);
-  // },
-  filename: function (req, file, cb) {
-    cb(null, file.originalname)
+
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use(morgan('dev'));
+app.use(cors());
+app.use(helmet());
+app.use(hpp());
+
+
+
+
+readdirSync("./src/routes").map(file => app.use('/api/v1', require(`./src/routes/${file}`)));
+
+
+app.use('*', (req, res) => {
+  res.status(404).json({ message: 'Page not found' });
+})
+
+
+// Connect to MongoDB ==============================second =====
+const mongoConnect = async () => {
+  try {
+    await mongoose.connect(process.env.MONGODB)
+    console.log(`mongoDb connect Successfully`);
+  } catch (err) { 
+    console.log(`Error connecting to MongoDB: ${err.message}`);
   }
-})
 
-
-const upload = multer({ storage })
-
-
-// cloudinary =======================================
-const cloudinary = require('cloudinary').v2;
-
-//config cloudinary ===============================
-cloudinary.config({
-  cloud_name: process.env.NAME,
-  api_key: process.env.API,
-  api_secret: process.env.SECRET,
-});
-
-
-
-
-
-
-const users = {
-  users: [
-    { id: 1, name: 'John Doe', email: 'john@example.com' },
-    { id: 2, name: 'Jane Smith', email: 'jane@example.com' }
-  ]
 }
-
-app.get('/', (req, res) => {
-  res.send(users);
-})
-
-app.post('/api/upload', upload.single('file'), async(req, res) => {
-  
-
-  await cloudinary.uploader.upload(req.file.path, (error, result) => {
-    if (error) {
-      console.error(error);
-      return res.status(500).send('Error uploading file to Cloudinary');
-    }
-    res.status(200).json({
-      message: 'File uploaded successfully',
-      result: result,
-    })
-
-  });
- 
-})
+mongoConnect().then(() => {
+  // App is running and listening on port 5000 ==================
+  app.listen(port, () => {
+    console.log(`listening on port: http://localhost:${port}`);
+  })
+}).catch(err => console.log(`mongoose connect Error : ${err}`))
 
 
 
-app.listen(port, () => {
-  console.log(`listening on port: http://localhost:${port}`);
-})
+
+
+
+
+
+
+
+
+
+
+
+
+
+
