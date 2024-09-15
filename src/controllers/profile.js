@@ -81,3 +81,49 @@ exports.profileData = async (req, res) => {
     })
   }
 }
+
+// User profile delete ==================================
+
+
+exports.profileDelete = async (req, res) => { 
+  try {
+
+    const {imageUrl, userId} = req.query;
+    const urlArray = imageUrl.split('/');
+    const imgName = urlArray[urlArray.length - 1];
+    const imageName = imgName.split('.')[0];
+    console.log(imageName);
+
+    
+    await cloudinary.uploader.destroy(imageName, (err, response) => {
+      if (err) {
+        console.error(err);
+        
+      } else {
+        console.log(response);
+
+      }
+
+    });
+  
+    
+    
+    const data = await UserModel.findByIdAndDelete(userId)
+      
+    return res.json({
+      message: 'User profile deleted successfully',
+      success: true,
+      data: data,
+    })
+    
+
+
+
+  } catch (e) {
+    return res.json({
+      success: false,
+      message: 'Error deleting user profile',
+      error: e,
+    })
+  }
+}

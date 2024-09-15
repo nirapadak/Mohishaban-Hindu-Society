@@ -1,0 +1,22 @@
+
+.profile-container{
+  
+  margin: auto;
+  align-items: center;
+  justify-content: center;
+}
+
+
+
+img{
+  width: 200px;
+  height: 200px;
+  border-radius: 100%;
+  
+}
+
+.delete-btn{
+  margin-left: 20px;
+  background-color: rgb(163, 30, 30);
+  cursor: pointer;
+}

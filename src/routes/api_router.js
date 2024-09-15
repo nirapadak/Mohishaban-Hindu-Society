@@ -4,7 +4,7 @@ const express = require('express');
 const router = express.Router()
 const app = express();
 
-const { getUsers, TowUsers, profileCreate, profileData } = require('../controllers/profile');
+const { getUsers, TowUsers, profileCreate, profileData, profileDelete } = require('../controllers/profile');
 const upload = require('../services/uploadService');
 
 cloudinary.config({
@@ -19,6 +19,7 @@ router.get('/', TowUsers);
 router.get('/users/profile', getUsers)
 router.get('/users/:id', profileData);
 router.post('/profile/upload', upload.single('file'), profileCreate);
+router.delete('/profile/delete', profileDelete);
 
 
 module.exports = router

@@ -1,4 +1,8 @@
-import {React, useState} from 'react';
+import { React, useState } from 'react';
+import '../assets/css/login.css';
+import { useNavigate } from 'react-router';
+import toast, { Toaster } from 'react-hot-toast';
+
 
 const Login = () => {
 
@@ -6,6 +10,7 @@ const Login = () => {
   const [file, setFile] = useState(null);
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
+  const navigate = useNavigate();
 
   const uploadFile = async event => {
     event.preventDefault();
@@ -28,10 +33,16 @@ const Login = () => {
       if (response.ok) {
         const data = await response.json();
 
+        // Create a Toast =====================================
+        toast.success('login success')
+
         
         console.log('Success:', data.data._id);
         // Store the authentication token in local storage in browser
-        localStorage.setItem('auth_token', data.data._id);
+        localStorage.setItem('auth_token', data.data._id)
+        localStorage.setItem('imageName', data.data.image)
+  
+        navigate('/profile');
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -45,8 +56,9 @@ const Login = () => {
   };
 
   return (
-    <div className="App">
+    <div className="container">
       <form onSubmit={uploadFile}>
+        <h2 className="login-title">Login</h2>
         <label>Name</label>
         <input
           type="text"
@@ -64,12 +76,18 @@ const Login = () => {
           onChange={e => setEmail(e.target.value)}
         />
         <input
+          className="input-file"
           type="file"
           name="file"
           accept=".jpg,.png,.jpeg"
           onChange={hendleFileChange}
         />
+        <div className="content-check">
+          <input type="checkbox" name="checkbox" className="check" />
+          <label className="check-label">Remember me</label>
+        </div>
         <button type="submit">Upload</button>
+        <Toaster position="bottom-center" />
       </form>
     </div>
   );

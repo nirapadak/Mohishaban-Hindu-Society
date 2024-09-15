@@ -3,10 +3,17 @@ header{
   flex-direction: row;
   align-items: center;
   justify-content: space-between;
-  margin-inline: 30px;
+  padding-inline: 50px;
+  background: rgb(102, 102, 228);
+  padding: 10px;
+}
+.app-logo{
+  color: #ffffff;
+  margin-left: 20px;
 }
 
 nav{
+  margin-right: 20px;
   display: flex;
   flex-direction: row;
   justify-content: space-around;
@@ -23,7 +30,14 @@ li{
 }
 
 a{
+  font-size: 16px;
   text-decoration: none;
-  color: black;
+  color: #ffffff;
   font-weight: bold;
+  transition: Color 0.3s ease-in-out;
+}
+
+a:hover{
+  text-decoration: underline;
+  
 }
