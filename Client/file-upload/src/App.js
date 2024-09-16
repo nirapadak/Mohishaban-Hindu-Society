@@ -8,20 +8,25 @@ import Home from './pages/Home';
 import About from './components/About';
 import { Navbar } from './components/Navbar';
 import ProtectedRoute from './components/ProtectedRoute';
+import Registration from './pages/Registration';
 
 
 
 function App() {
 
-  
+  const isLogined = window.localStorage.getItem('auth_token');
+  const userType = window.localStorage.getItem(true);
+
 
   return (
     <Router>
-      <Navbar />
+      {/* nav================================ */}
+      <Navbar isLogined={isLogined} userType={userType}/>
     
       <Routes>
       <Route path='/' Component={Home}/>
-        <Route path='/login' Component={Login} />
+      <Route path='/register' Component={Login} />
+      <Route path='/login' Component={Registration} />
         
 
         

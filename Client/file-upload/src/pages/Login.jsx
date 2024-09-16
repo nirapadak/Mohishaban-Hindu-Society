@@ -9,7 +9,10 @@ const Login = () => {
   
   const [file, setFile] = useState(null);
   const [name, setName] = useState('');
+  const [number, setNumber] = useState('');
   const [email, setEmail] = useState('');
+
+// navigation state ================
   const navigate = useNavigate();
 
   const uploadFile = async event => {
@@ -24,6 +27,7 @@ const Login = () => {
     formData.append('file', file);
     formData.append('name', name);
     formData.append('email', email);
+    formData.append('number', number);
 
     try {
       const response = await fetch('http://localhost:5000/api/v1/profile/upload', {
@@ -37,10 +41,9 @@ const Login = () => {
         toast.success('login success')
 
         
-        console.log('Success:', data.data._id);
+        console.log('Success:', data);
         // Store the authentication token in local storage in browser
-        localStorage.setItem('auth_token', data.data._id)
-        localStorage.setItem('imageName', data.data.image)
+        localStorage.setItem('auth_token', data.auth_token);
   
         navigate('/profile');
       } else {
@@ -58,7 +61,7 @@ const Login = () => {
   return (
     <div className="container">
       <form onSubmit={uploadFile}>
-        <h2 className="login-title">Login</h2>
+        <h2 className="login-title">Registration</h2>
         <label>Name</label>
         <input
           type="text"
@@ -74,6 +77,14 @@ const Login = () => {
           placeholder="Enter your email"
           value={email}
           onChange={e => setEmail(e.target.value)}
+        />
+        <label>Number</label>
+        <input
+          type="number"
+          name="number"
+          placeholder="Enter your number"
+          value={number}
+          onChange={e => setNumber(e.target.value)}
         />
         <input
           className="input-file"

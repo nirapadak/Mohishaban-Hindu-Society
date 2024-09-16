@@ -14,11 +14,36 @@ const userSchema = new mongoose.Schema({
      default: "nirapadakpal@gmail.com",
      required: true,
   },
+  number: {
+    type: String,
+    required: true,
+    min: 11,
+    max: 11,
+   },
   image: {
     type: String,
     required: true,
   },
-   date: { type: Date, default: Date.now },
+  familyMember: {
+    type: String,
+    min: 1,
+    default: 1,
+  },
+  post: {
+    type: String,
+    default: "Mamber"
+  },
+  subscription: {
+    type: String,
+    default: 0,
+  },
+  admin: {
+    type: Number,
+    default: 0,
+  },
+  date: {
+    type: Date, default: Date.now
+  },
 
 }, {
   timestamps: true,

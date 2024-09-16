@@ -1,5 +1,6 @@
 const cloudinary = require('cloudinary').v2;
-const UserModel = require('../../model/userRegister');
+const UserModel = require('../model/userRegister');
+const jwt = require('jsonwebtoken');
 
 const { users } = require("../services/towUser");
 
@@ -21,8 +22,6 @@ exports.TowUsers= async (req, res) => {
 
 // upload image to cloudinary and save to database =====================================================
 exports.profileCreate =  async(req, res) => {
-  
-
   try {
     await cloudinary.uploader.upload(req.file.path, async (error, result) => {
     
@@ -36,20 +35,26 @@ exports.profileCreate =  async(req, res) => {
       const data = await UserModel.create({
         name: req.body.name,
         email: req.body.email,
+        number: req.body.number,
         image: result.url,
+        familyMember: req.body.familyMember,
       })
+        console.log(data);
     
+        // create token ============================
+        let token = jwt.sign({ email: data.email, id:data._id.toString(), image: data.image }, process.env.TOKEN_KEY, { expiresIn: '7d' })
+
+        // token is created ============================
+        console.log(token);
       
-         res.status(200).json({
+        res.status(200).json({
         message: 'File uploaded successfully',
         result: result,
         data: data,
+        auth_token: token,
     
       })
       }
-
-      
-
      
 
     });
@@ -67,11 +72,20 @@ exports.profileCreate =  async(req, res) => {
 // get data from profile ==========================
 exports.profileData = async (req, res) => {
   try {
-    const data = await UserModel.findById(req.params.id);
+    const token = req.user;
+  
+  
+    console.log(token.id);
+    if (!token) { 
+      return res.status(403).json({ success: false, message: 'user unouthorized' });
+    }
+
+     const data = await UserModel.findById({_id: token.id});
     res.json({
-      success: true,
-      data: data,
-    })
+        success: true,
+        data: data,
+      })
+   
     
   } catch (e) { 
     res.json({
@@ -82,14 +96,16 @@ exports.profileData = async (req, res) => {
   }
 }
 
+
+
+
+
 // User profile delete ==================================
-
-
 exports.profileDelete = async (req, res) => { 
   try {
 
-    const {imageUrl, userId} = req.query;
-    const urlArray = imageUrl.split('/');
+    const {email, id, image} = req.user;
+    const urlArray = image.split('/');
     const imgName = urlArray[urlArray.length - 1];
     const imageName = imgName.split('.')[0];
     console.log(imageName);
@@ -108,7 +124,7 @@ exports.profileDelete = async (req, res) => {
   
     
     
-    const data = await UserModel.findByIdAndDelete(userId)
+    const data = await UserModel.findByIdAndDelete(id)
       
     return res.json({
       message: 'User profile deleted successfully',

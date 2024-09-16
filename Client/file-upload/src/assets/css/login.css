@@ -15,6 +15,13 @@
   font-family: sans-serif;
 }
 
+.login-sub{
+  font-size: 16px;
+  font-weight: normal;
+  margin-bottom: 20px;
+  align-self: center;
+}
+
 form {
   padding: 30px;
   display: flex;

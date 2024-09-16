@@ -22,8 +22,6 @@ app.use(helmet());
 app.use(hpp());
 
 
-
-
 readdirSync("./src/routes").map(file => app.use('/api/v1', require(`./src/routes/${file}`)));
 
 
