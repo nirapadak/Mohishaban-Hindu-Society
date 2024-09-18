@@ -1,18 +1,15 @@
 import { React, useState } from 'react';
-import '../assets/css/login.css';
-import { useNavigate } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
-
+import { useNavigate } from 'react-router';
+import '../assets/css/login.css';
 
 const Login = () => {
-
-  
   const [file, setFile] = useState(null);
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const [email, setEmail] = useState('');
 
-// navigation state ================
+  // navigation state ================
   const navigate = useNavigate();
 
   const uploadFile = async event => {
@@ -30,22 +27,27 @@ const Login = () => {
     formData.append('number', number);
 
     try {
-      const response = await fetch('http://localhost:5000/api/v1/profile/upload', {
-        method: 'POST',
-        body: formData,
-      });
+      const response = await fetch(
+        'http://localhost:5000/api/v1/profile/upload',
+        {
+          method: 'POST',
+          body: formData,
+        }
+      );
       if (response.ok) {
         const data = await response.json();
 
-        // Create a Toast =====================================
-        toast.success('login success')
-
-        
         console.log('Success:', data);
         // Store the authentication token in local storage in browser
+        if (data.data.admin === 1) {
+          localStorage.setItem('admin', true);
+        }
         localStorage.setItem('auth_token', data.auth_token);
-  
-        navigate('/profile');
+        // window.location.reload(); // refresh the page to clear the data
+        // Create a Toast =====================================
+        navigate('/');
+
+        toast.success('Registration successfully');
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
@@ -102,7 +104,6 @@ const Login = () => {
       </form>
     </div>
   );
-}
-
+};
 
 export default Login;

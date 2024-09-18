@@ -80,7 +80,13 @@ exports.profileData = async (req, res) => {
       return res.status(403).json({ success: false, message: 'user unouthorized' });
     }
 
-     const data = await UserModel.findById({_id: token.id});
+    const data = await UserModel.findById({ _id: token.id });
+    
+
+    if (!data) {
+      return res.status(404).json({ success: false, message: 'User not found' });
+    }
+
     res.json({
         success: true,
         data: data,
@@ -96,7 +102,82 @@ exports.profileData = async (req, res) => {
   }
 }
 
+// Login profile =======================================
 
+exports.profileLogin = async (req, res) => {
+  const { email, number } = req.body;
+
+  try {
+    const checkUser = await UserModel.findOne({ email });
+    if (!checkUser)
+      return res.json({
+        success: false,
+        message: "User doesn't exists! Please register first",
+      });
+
+    console.log(checkUser.number);
+    if (checkUser.number != number) {
+      return res.json({
+        success: false,
+        message: "Incorrect password! Please try again",
+      });
+    }
+  
+  
+
+ 
+
+    const token = jwt.sign(
+      {
+        email: checkUser.email,
+        id: checkUser._id.toString(),
+        image: checkUser.image,
+      },
+      process.env.TOKEN_KEY,
+      { expiresIn: "7d" }
+    );
+
+    // res.cookie("token", token, { httpOnly: true, secure: false }).json({
+    //   success: true,
+    //   message: "Logged in successfully",
+    //   user: {
+    //     email: checkUser.email,
+    //     admin: checkUser.admin,
+    //     id: checkUser._id,
+    //     name: checkUser.name,
+    //   },
+    // });
+
+      res.json({
+      success: true,
+      message: "Logged in successfully",
+      user: {
+        email: checkUser.email,
+        admin: checkUser.admin,
+        id: checkUser._id,
+        name: checkUser.name,
+        },
+      token: token
+    });
+
+
+  } catch (e) {
+    console.log(e);
+    res.status(500).json({
+      success: false,
+      message: "Some error occured",
+    });
+  }
+};
+
+
+// User profile for cookies =======================================
+const logoutUser = (req, res) => {
+  res.clearCookie("token").json({
+    success: true,
+    message: "Logged out successfully!",
+  });
+};
 
 
 
@@ -143,3 +224,23 @@ exports.profileDelete = async (req, res) => {
     })
   }
 }
+
+//================================= admin user ===================================
+
+exports.getAllUsers = async (req, res) => {
+  try {
+    const users = await UserModel.find();
+    res.json({
+      success: true,
+      message: 'All users fetched successfully',
+      numberOfUsers: users.length,
+      data: users,
+    }
+      );
+  } catch (error) {
+    res.json({
+      success: false,
+      message: error.message
+    });
+  }
+};

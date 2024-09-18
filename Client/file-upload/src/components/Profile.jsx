@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import '../assets/css/profile.css'
 import axios from 'axios';
-import { Navigate, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import toast, { Toaster } from 'react-hot-toast';
 
 const Profile = () => {
@@ -57,11 +57,12 @@ const Profile = () => {
     } )
      .then((response) => {
        if (response.status === 200) {
-          toast.success('Account Delete Successfully Completed');
-          localStorage.removeItem('auth_token');
-          localStorage.removeItem('imageName');
-          navigate('/login');
-        }
+         toast.success('Account Delete Successfully Completed');
+         localStorage.removeItem('auth_token');
+         localStorage.removeItem('admin');
+         navigate('/login');
+          window.location.reload(); // refresh the page to clear the data
+       }
       })
      .catch((error) => {
         console.error('Error:', error);
