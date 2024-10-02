@@ -43,6 +43,7 @@ const Dashboard = () => {
   function userEdit(id) {
     console.log(id);
     setModal(true);
+    return id;
   }
   // modal close ============================
   function closeModalYes() {
@@ -72,11 +73,13 @@ const Dashboard = () => {
   return (
     <div className="container">
       {modal && <UserEditModal Yes={closeModalYes} Not={closeModalNot} />}
-      <h1>Dashboard Page</h1>
-      <p>Welcome to the dashboard page!</p>
 
       <div className="user-table-container">
         <h2>User List</h2>
+
+        <div className="dashboard-home">
+          <h3>Number of User : {users.length}</h3>
+        </div>
 
         {/* Search Box */}
         <input

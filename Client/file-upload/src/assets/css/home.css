@@ -120,6 +120,18 @@ button:hover {
   box-sizing: border-box;
 }
 
+.hero-img-background{
+
+  width: 600px;
+  height: 600px;
+  position: absolute;
+  object-fit: cover;
+  top: 300px;
+  left: -250px;
+  z-index: -1;
+  opacity: 7%;
+}
+
 .hero-img-container {
   width: 50%; /* Image takes half the screen */
   height: 100%;
@@ -135,9 +147,20 @@ button:hover {
   color: white;
   z-index: 2;
 }
-
+.sironame{
+font-size: 3rem;
+  margin-bottom: 20px;
+  color: #ff4e50;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
+.title-sub{
+  font-size: 0.8rem;
+  margin-bottom: 5px;
+  color: #ff4e50;
+  text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+}
 .title-home{
-  font-size: 2rem;
+  font-size: 1.5rem;
   margin-bottom: 20px;
   color: #ff4e50;
   text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
@@ -161,16 +184,16 @@ button:hover {
 button {
   padding: 15px 30px;
   font-size: 1rem;
-  border: none;
   cursor: pointer;
-  border-radius: 30px;
   transition: all 0.3s ease;
 }
 
 .btn-donate {
+  width: 200px;
   background-color: transparent;
   color: #ff4e50;
-  border: 2px solid #ff4e50;
+  border: 1px solid #ff4e50;
+  border-radius: 100px;
 }
 
 .btn-donate:hover {
@@ -181,6 +204,7 @@ button {
 .btn-see-more {
   background-color: #f9d423;
   color: black;
+  border-radius: 100px;
 }
 
 button:hover {
@@ -210,4 +234,31 @@ button:hover {
     padding: 10px 20px;
     font-size: 0.9rem;
   }
+}
+
+
+/* Section Two =================================================== */
+.section-two{
+  padding: 40px;
+  align-items: center;
+  text-align: center;
+
+}
+.section-two-img{
+  border-radius: 50px;
+
+}
+.section-two-img {
+  border-radius: 50px;
+  object-fit: cover;
+  margin-bottom: 15px;
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3); /* Shadow for flying effect */
+  transform: translateY(-10px); /* Slightly lifts the image */
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for hover effect */
+}
+
+/* Optional hover effect to increase the 'flying' illusion */
+.section-two-img:hover {
+  transform: translateY(-20px); /* Lift more when hovering */
+  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.4); /* Deepens the shadow on hover */
 }

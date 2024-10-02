@@ -10,6 +10,12 @@ const Profile = () => {
   const [image, setImage] = useState('')
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
+  const [id, setId] = useState('')
+  const [role, setRole] = useState('')
+  const [f_num, setF_num] = useState('')
+  const [subscription, setSubscription] = useState('')
+  const [post, setPost] = useState('')
+  const [number, setNumber] = useState('')
   
   const navigate = useNavigate();
   
@@ -31,6 +37,13 @@ const Profile = () => {
             setName(response.data.data.name);
             setEmail(response.data.data.email);
             setImage(response.data.data.image);
+            setId(response.data.data._id);
+            setRole(response.data.data.admin);
+            setF_num(response.data.data.familyMember);
+            setSubscription(response.data.data.subscription);
+            setPost(response.data.data.post);
+            setNumber(response.data.data.number);
+
           } else {
             setName('user dose not found');
             setEmail('user email dose not exist');
@@ -74,16 +87,32 @@ const notify = () => toast.success('Logout Successfully Completed');
 
 
   return (
-    <div className='profile-container'>
-      <img src={image} alt="profile" />
-      <h3>My name is : {name}</h3>
-      <h3>Email : {email}</h3>
-      <button onClick={notify}>Logout</button>
-      <button className='delete-btn' onClick={deleteAccount}>Delete Account</button>
-      <Toaster
-        position='bottom-center'
-      />
-      
+    <div className="profile-container">
+      <div className="profile-card">
+        <img src={image} alt="Profile" className="profile-image" />
+        <h2 className="profile-name">{name.toUpperCase()}</h2>
+        
+        <div className="profile-details">
+          <p className="profile-id">ID: { id}</p>
+          <p className="profile-role">Role: {role === 1?<text>Admin</text>: <text>User</text>}</p>
+          <p className="profile-post">Post: { post}</p>
+          <p className="profile-email">Email: { email}</p>
+          <p className="profile-mobile">Mobile: { number}</p>
+          <p className="profile-family">Family Members: { f_num}</p>
+          <p className="profile-subscription">Subscription: { subscription}</p>
+        </div>
+
+        <div className="profile-actions">
+          <button className="btn delete-btn" onClick={deleteAccount}>
+            Delete Account
+          </button>
+          <button className="btn logout-btn" onClick={notify}>
+            Logout
+          </button>
+        </div>
+      </div>
+
+      <Toaster position="bottom-center" />
     </div>
   );
 };

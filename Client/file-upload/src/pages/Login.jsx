@@ -2,6 +2,7 @@ import { React, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import '../assets/css/login.css';
+import Registration from './Registration';
 
 const Login = () => {
   const [file, setFile] = useState(null);
@@ -43,10 +44,10 @@ const Login = () => {
           localStorage.setItem('admin', true);
         }
         localStorage.setItem('auth_token', data.auth_token);
-        // window.location.reload(); // refresh the page to clear the data
         // Create a Toast =====================================
         navigate('/');
-
+        window.location.reload(); // refresh the page to clear the data
+        
         toast.success('Registration successfully');
       } else {
         throw new Error(`HTTP error! status: ${response.status}`);
@@ -99,7 +100,7 @@ const Login = () => {
           <input type="checkbox" name="checkbox" className="check" />
           <label className="check-label">Remember me</label>
         </div>
-        <button type="submit">Upload</button>
+        <button type="submit">Registration</button>
         <Toaster position="bottom-center" />
       </form>
     </div>

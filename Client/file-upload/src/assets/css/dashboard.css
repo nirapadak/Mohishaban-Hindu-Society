@@ -1,4 +1,12 @@
+.container{
+  margin-top: 50px;
+  width: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
 .user-table-container {
+  
   width: 90%;
   margin: 20px auto;
   text-align: center;
