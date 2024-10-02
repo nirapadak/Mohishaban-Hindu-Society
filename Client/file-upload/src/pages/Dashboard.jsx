@@ -2,12 +2,16 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import '../assets/css/dashboard.css';
 // react icons =====================================
-import { MdDelete } from 'react-icons/md';
 import { FaUserEdit } from 'react-icons/fa';
+import { MdDelete } from 'react-icons/md';
+import toast, {Toaster} from 'react-hot-toast';
+import UserEditModal from '../components/modal/UserEditModal';
 
 const Dashboard = () => {
   const [searchTerm, setSearchTerm] = useState('');
   const [users, setUsers] = useState([]);
+
+  const [modal, setModal] = useState(false);
 
   // If the token is not present, redirect to login page
   if (!localStorage.getItem('auth_token') || !localStorage.getItem('admin')) {
@@ -33,23 +37,41 @@ const Dashboard = () => {
       });
   }, []);
 
-
   // user delete and edit ===================================================
 
+  // user edit =============================
   function userEdit(id) {
     console.log(id);
+    setModal(true);
+  }
+  // modal close ============================
+  function closeModalYes() {
     
+    setModal(false);
+  }
+  function closeModalNot() {
+    setModal(false);
   }
 
-  function userDelete(id){
+  // user delete =================================
+  function userDelete(id) {
+
     console.log(id);
+    axios
+      .delete(`http://localhost:5000/api/v1/admin/delete/${id}`)
+      .then(res => {
+        console.log(res);
+        const updatedUsers = users.filter(user => user._id !== id);
+        setUsers(updatedUsers);
+        toast.success('User Delete successfully');
+      }).catch(err => { 
+        console.log(err);
+      });
   }
-
-
-
 
   return (
     <div className="container">
+      {modal && <UserEditModal Yes={closeModalYes} Not={closeModalNot} />}
       <h1>Dashboard Page</h1>
       <p>Welcome to the dashboard page!</p>
 
@@ -70,21 +92,28 @@ const Dashboard = () => {
           <thead>
             <tr>
               <th>No</th>
+              <th>Image</th>
               <th>ID/Mobile</th>
               <th>Name</th>
               <th>Email</th>
               <th>Amount</th>
               <th>Role</th>
-              <th>edit</th>
-              <th>delete</th>
-             
+              <th>Edit</th>
+              <th>Delete</th>
             </tr>
           </thead>
           <tbody>
             {users.length > 0 ? (
               users.map((user, index) => (
                 <tr key={index}>
-                  <td>{index + 1}</td> {/* or user.number */}
+                  <td>{index + 1}</td>
+                  <td>
+                    <img
+                      className="profile-img-td"
+                      src={user.image}
+                      alt="profile"
+                    />
+                  </td>
                   <td>{user.number}</td>
                   <td>{user.name}</td>
                   <td>{user.email}</td>
@@ -96,7 +125,7 @@ const Dashboard = () => {
                       onClick={() => userEdit(user._id)}
                       className="edit-user"
                     >
-                      <FaUserEdit/>
+                      <FaUserEdit />
                     </h3>
                   </td>
                   <td>
@@ -116,6 +145,7 @@ const Dashboard = () => {
             )}
           </tbody>
         </table>
+        <Toaster position="bottom-center" />
       </div>
     </div>
   );
