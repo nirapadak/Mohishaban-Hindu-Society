@@ -20,13 +20,20 @@ const Home = () => {
 
 
   return (
-    <div className='home-hero-container'>
-      <img className='hero-img-container' src={data.image_one} alt="this is home image?" />
+    <div className="home-hero-container">
       <div className="content">
-        <h1>{data.title}</h1>
-        <button>Donate</button>
-
+        <h1 className="title-home">{data.title}</h1>
+        <p className="home-description">{data.description}</p>
+        <div className="but-container">
+          <button className="btn-donate">Donate</button>
+          <button>See More</button>
+        </div>
       </div>
+      <img
+        className="hero-img-container"
+        src={data.image_two}
+        alt="this is home image?"
+      />
     </div>
   );
 };

@@ -20,7 +20,7 @@ export const Navbar = ({ isLogined, userType }) => {
   return (
     <>
       <header>
-        <h1 className="app-logo">Blog</h1>
+        <h1 className="app-logo">Mohishaban Hindu Society</h1>
         {/* add id to active and panding  */}
         <nav id="sidebar">
           <ul>
