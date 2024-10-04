@@ -1,10 +1,14 @@
 import React, {useState, useEffect } from 'react';
 import axios from 'axios';
 import '../assets/css/home.css'
+import { FcDonate } from 'react-icons/fc';
+import { useNavigate } from 'react-router';
+import UserEditModal from '../components/modal/UserEditModal';
 
 const Home = () => {
 
   const [data, setData] = useState([]);
+  const navigate = useNavigate()
 
 
   useEffect(() => {
@@ -17,10 +21,40 @@ const Home = () => {
     })
   },[])
 
+  function clickSeeMore() {
+    navigate('/about');
+  }
 
+  const modalMassage = 'এই সার্ভিস টি অামাদের এখনো সেট করা হয় নি ';
+  const modalData = 'দুঃখিত আপনি এটি সম্পাদনা করবেন না';
+  const [modal, setModal] = useState(false);
+
+  
+  const closeModalYes = () => {
+    setModal(false);
+    // call the function to save data
+  };
+  const closeModalNot = () => {
+    setModal(false);
+  };
+
+  const showModal = () => {
+    setModal(true);
+  };
 
   return (
     <div>
+      {/* this is a Toast Modal ==================================== */}
+      {modal && (
+        <UserEditModal
+          massage={modalMassage}
+          data={modalData}
+          Yes={closeModalYes}
+          Not={closeModalNot}
+        />
+      )}
+      {/* this is modal end ==================================== */}
+
       <div className="home-hero-container">
         <img
           className="hero-img-background"
@@ -29,14 +63,19 @@ const Home = () => {
         />
         <div className="content">
           <h1 className="sironame">{data.title}</h1>
-          <p className="title-sub">সকলকে মহালয়ার শুভেচ্ছা সৌজন্য –</p>
+          <p className="title-sub">সকলকে মহালয়ার শুভেচ্ছা সৌজন্যে –</p>
           <h1 className="title-home">
-            মহিষাবান পালপাড়া ডাঃ বাড়ী সার্বজনীন দূর্গাপূজা মন্দির কমিটি
+            মহিষাবান পালপাড়া ডাঃ বাড়ী সার্বজনীন <br />
+            শ্রী শ্রী দূর্গাপূজা মন্দির কমিটি
           </h1>
           <p className="home-description">"{data.description}"</p>
           <div className="but-container">
-            <button className="btn-donate">Donate</button>
-            <button>See More</button>
+            <button className="btn-donate" onClick={showModal}>
+              Donate <FcDonate />
+            </button>
+            <button className="btn-SeeMore" onClick={clickSeeMore}>
+              See More
+            </button>
           </div>
         </div>
         <img
@@ -56,12 +95,12 @@ const Home = () => {
         </div>
 
         <div className="saction-two-content">
-          <h2>এই মন্দিরে কি কি আছে?</h2>
-          <p>
-            মহিষাবান পালপাড়া ডাঃ বাড়ী সার্বজনীন দূর্গাপূজা মন্দির কমিটির উপর
-            দেশের অন্যতম মন্দিরের ইংরেজীতের প্রতিভাবনা। আমিদের মন্দিরের উপর
-            দেশের প্রতিভাবনার প্রধান অংশ হচ্ছে এ
-          </p>
+          <div className="saction-title-two">
+            <div className="line-one"></div>
+            <h2 className="saction-two-header">আমাদের কাজ কি কি ?</h2>
+            <div className="line-two"></div>
+          </div>
+          {/* three card design */}
         </div>
       </div>
     </div>

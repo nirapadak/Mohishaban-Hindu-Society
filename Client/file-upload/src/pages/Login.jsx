@@ -2,7 +2,6 @@ import { React, useState } from 'react';
 import toast, { Toaster } from 'react-hot-toast';
 import { useNavigate } from 'react-router';
 import '../assets/css/login.css';
-import Registration from './Registration';
 
 const Login = () => {
   const [file, setFile] = useState(null);

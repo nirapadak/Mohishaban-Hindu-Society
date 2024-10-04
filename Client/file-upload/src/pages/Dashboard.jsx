@@ -69,10 +69,12 @@ const Dashboard = () => {
         console.log(err);
       });
   }
+  const modalMassage = "আপনি এই ব্যবহারকারী সম্পাদনা করতে চান?";
+  const modalData = "দুঃখিত আপনি এটি সম্পাদনা করবেন না "
 
   return (
     <div className="container">
-      {modal && <UserEditModal Yes={closeModalYes} Not={closeModalNot} />}
+      {modal && <UserEditModal massage={modalMassage} data={modalData} Yes={closeModalYes} Not={closeModalNot} />}
 
       <div className="user-table-container">
         <h2>User List</h2>
