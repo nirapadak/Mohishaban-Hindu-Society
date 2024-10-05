@@ -1,0 +1,71 @@
+/* Notification button */
+.closeDrawer-btn {
+  background-color: orange; /* Theme color */
+  border: 1px solid #ec2b09;
+  padding: 5px 5px;
+  cursor: pointer;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+/* Side drawer */
+.notification-drawer {
+  position: fixed;
+  margin-top: 50px;
+  top: 0;
+  right: -40%;
+  height: 90%;
+  width: 30%;
+  background-color: #fff;
+  box-shadow: -2px 0 5px rgba(0, 0, 0, 0.3);
+  transition: right 0.3s ease;
+  z-index: 2;
+  padding: 20px;
+}
+
+/* Open state */
+.notification-drawer.open {
+  right: 0;
+}
+.notification-drawer.gone{
+  right: -40%;
+  visibility: hidden;
+}
+
+/* Drawer header */
+.drawer-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.drawer-header h2 {
+  margin: 0;
+}
+
+.drawer-header button {
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  color: red;
+}
+
+/* Drawer content */
+.drawer-content {
+  padding: 10px;
+  color: #333;
+}
+
+/* Overlay when drawer is open */
+.drawer-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 1;
+}
+

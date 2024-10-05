@@ -4,6 +4,7 @@ import '../assets/css/home.css'
 import { FcDonate } from 'react-icons/fc';
 import { useNavigate } from 'react-router';
 import UserEditModal from '../components/modal/UserEditModal';
+import DateTime from './DateTime';
 
 const Home = () => {
 
@@ -85,12 +86,13 @@ const Home = () => {
         />
       </div>
       {/* saction two================================================== */}
+      <DateTime/>
       <div className="section-two">
         <div className="two-section-image">
           <img
             className="section-two-img"
             src="https://res.cloudinary.com/dwlcudfef/image/upload/v1727887635/durga-puja_etxqsq.webp"
-            alt="image"
+            alt="Not showing Image"
           />
         </div>
 

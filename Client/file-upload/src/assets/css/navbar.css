@@ -10,6 +10,7 @@ header{
   padding-inline: 50px;
   background: #ff4e50;
   padding: 10px;
+  
 }
 .app-logo{
   text-decoration: none;
@@ -19,6 +20,7 @@ header{
 }
 
 nav{
+  margin-top: 6px;
   margin-right: 20px;
   display: flex;
   flex-direction: row;
@@ -32,7 +34,7 @@ ul{
 
 li{
   list-style-type: none;
-  margin: 0 10px;
+  margin: 0px 8px;
 
 }
 
@@ -56,4 +58,27 @@ a:hover{
   background-color: white; 
   padding: 10px;
   border-radius: 5px;
+}
+
+.nav-link-icons{
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+}
+
+/* Icon Styles */
+.nav-icons {
+  font-size: 24px;
+  color: #ff4e50;
+  background-color: white;
+
+  border-radius: 50%;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  margin-right: 2px;
+}
+
+.nav-icons:hover {
+  color: #ffffff;
+  background-color: #ff6b6b;
+  transform: scale(1.2); /* Slight zoom on hover */
 }
