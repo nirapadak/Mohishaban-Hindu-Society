@@ -272,6 +272,7 @@ const Dashboard = () => {
         <table className="user-table">
           <thead>
             <tr>
+              <th>mark</th>
               <th>No</th>
               <th>Image</th>
               <th>ID/Mobile</th>
@@ -287,7 +288,11 @@ const Dashboard = () => {
             {currentUsers.length > 0 ? (
               currentUsers.map((user, index) => (
                 <tr key={index}>
+                  <td>
+                    <input type="checkbox" name="checkbox" className="check" />
+                  </td>
                   <td>{indexOfFirstUser + index + 1}</td>
+
                   <td>
                     {/* Profile Image with Popup */}
                     <div className="profile-img-container">

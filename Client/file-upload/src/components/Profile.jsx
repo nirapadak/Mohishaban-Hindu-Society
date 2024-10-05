@@ -82,8 +82,13 @@ const Profile = () => {
       });
   }
 
-const notify = () => toast.success('Logout Successfully Completed');
-
+  const notify = () => {
+    localStorage.removeItem('auth_token');
+    localStorage.removeItem('admin');
+    navigate('/login');
+    window.location.reload(); // refresh the page to clear the data
+    toast.success('Logout Successfully Completed');
+  }
 
 
   return (

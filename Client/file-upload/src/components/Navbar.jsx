@@ -1,22 +1,22 @@
 import toast, { Toaster } from 'react-hot-toast';
-import { NavLink, useNavigate } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import '../assets/css/navbar.css';
 import { IoIosNotifications } from 'react-icons/io';
 import { RiAccountCircleFill } from 'react-icons/ri';
-import { FaGripLinesVertical } from 'react-icons/fa';
+
 import NotificationDrawer from './NotificationDrawer';
 import { useState } from 'react';
 
 export const Navbar = ({ isLogined, userType }) => {
-  const navigate = useNavigate();
 
-  function clearData() {
-    localStorage.removeItem('auth_token');
-    localStorage.removeItem('admin');
-    navigate('/login'); // redirect to login page
-    window.location.reload(); // refresh the page to clear the data
-    toast.success('Logout Successfully Completed'); // show toast message when logout successful
-  }
+
+  // function clearData() {
+  //   localStorage.removeItem('auth_token');
+  //   localStorage.removeItem('admin');
+  //   navigate('/login'); // redirect to login page
+  //   window.location.reload(); // refresh the page to clear the data
+  //   toast.success('Logout Successfully Completed'); // show toast message when logout successful
+  // }
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
 
@@ -64,11 +64,6 @@ export const Navbar = ({ isLogined, userType }) => {
                     Profile
                   </NavLink>
                 </li>
-                <li>
-                  <NavLink to="/login" onClick={clearData} className="nav-link">
-                    Logout
-                  </NavLink>
-                </li>
                 <li className="nav-link-icons">
                   <IoIosNotifications
                     className="nav-icons"
@@ -89,15 +84,7 @@ export const Navbar = ({ isLogined, userType }) => {
                       Profile
                     </NavLink>
                   </li>
-                  <li>
-                    <NavLink
-                      to="/login"
-                      onClick={clearData}
-                      className="nav-link"
-                    >
-                      Logout
-                    </NavLink>
-                  </li>
+                  
                   <li>
                     <NavLink className="nav-link">
                       <IoIosNotifications onClick={toggleDrawer} />
