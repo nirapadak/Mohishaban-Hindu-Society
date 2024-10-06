@@ -78,3 +78,12 @@ button {
   
 }
 
+.account-have{
+  margin-top: 20px;
+}
+.account-have u{
+  color: #ff4e50;
+  cursor: pointer;
+  text-decoration: underline;
+  transition: color 0.3s ease-in-out;
+}

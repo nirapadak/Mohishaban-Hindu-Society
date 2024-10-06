@@ -42,6 +42,11 @@ const Registration = () => {
     }
   };
 
+  const haveAccount = () => {
+    navigate('/register');
+    // window.location.reload(); // refresh the page to clear the data
+  };
+
   return (
     <div className="container">
       <form onSubmit={loginSubmitFrom}>
@@ -65,6 +70,10 @@ const Registration = () => {
           onChange={e => setNumber(e.target.value)}
           required
         />
+        <p className="account-have">
+          You don't have an Account! Please{' '}
+          <u onClick={haveAccount}>Registration</u>
+        </p>
         <button type="submit" value="Submit">
           Login
         </button>

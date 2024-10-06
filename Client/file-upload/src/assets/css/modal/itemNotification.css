@@ -1,6 +1,7 @@
 /* Notification Item Container */
 .notification-item {
   display: flex;
+  
   align-items: flex-start;
   padding: 10px;
   border-bottom: 1px solid #ddd;

@@ -1,24 +1,28 @@
-import React from 'react';
-import '../assets/css/notification.css';
+import axios from 'axios';
+import React, { useEffect, useState } from 'react';
 import { IoClose } from 'react-icons/io5';
+import '../assets/css/notification.css';
 import NotificationItem from './modal/NotificationItem';
 
 const NotificationDrawer = ({ isOpen, toggleDrawer }) => {
-  
-  const notifications = [
-    {
-      date: '2024-10-05',
-      title: 'New Message from John',
-      message: 'Hey! Check out the new feature I added.',
-      image: '',
-    },
-    {
-      date: '2024-10-04',
-      title: 'System Update',
-      message: 'Your system has been updated to version 2.0.',
-      image: 'https://via.placeholder.com/50',
-    },
-  ];
+  const [notification, setNotifications] = useState([]);
+
+  useEffect(() => {
+    axios
+      .get('http://localhost:5000/api/v1/notification/get', {
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      })
+      .then(response => {
+        setNotifications(response.data.data);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+  }, []);
+
+ 
 
   return (
     <>
@@ -34,17 +38,28 @@ const NotificationDrawer = ({ isOpen, toggleDrawer }) => {
           {/* Notification list or content goes here */}
           {/* Render each notification item */}
           <div className="drawer-content">
-            {notifications.map((notif, index) => (
-              <NotificationItem
-                key={index}
-                date={notif.date}
-                title={notif.title}
-                message={notif.message}
-                image={notif.image}
-              />
-            ))}
+            {Array.isArray(notification) && notification.length > 0 ? (
+              notification.map((notif, index) => (
+                <NotificationItem
+                  key={index}
+                  date={new Date(notif.date).toLocaleDateString('en-US', {
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                  time={new Date(notif.date).toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                  })}
+                  title={notif.title}
+                  message={notif.description}
+                  image={notif.image}
+                />
+              ))
+            ) : (
+              <p>No notifications available</p>
+            )}
           </div>
-
         </div>
       </div>
 

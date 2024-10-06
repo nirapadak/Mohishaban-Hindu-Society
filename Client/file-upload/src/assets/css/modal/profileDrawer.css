@@ -1,5 +1,5 @@
 /* Side drawer */
-.notification-drawer {
+.profile-drawer {
   position: fixed;
   margin-top: 50px;
   top: 0;
@@ -11,24 +11,15 @@
   transition: right 0.3s ease;
   z-index: 2;
   padding: 20px;
-  overflow-y: auto; /* Enable scrolling in the drawer */
-  scroll-behavior: smooth;
-}
-
-/* Drawer content */
-.drawer-content {
-  color: #333;
-  
-  max-height: 80vh; /* Adjust based on layout */
-  overflow-y: auto; /* Enable scrolling if content exceeds the height */
+  overflow-y: auto;
 }
 
 /* Open state */
-.notification-drawer.open {
+.profile-drawer.open {
   right: 0;
 }
 
-.notification-drawer.gone {
+.profile-drawer.gone {
   right: -40%;
   visibility: hidden;
 }
@@ -51,6 +42,18 @@
   cursor: pointer;
   font-size: 16px;
   color: red;
+}
+
+/* Profile content */
+.profile-details {
+  text-align: center;
+}
+
+.profile-image {
+  width: 100px;
+  height: 100px;
+  border-radius: 50%;
+  margin-bottom: 20px;
 }
 
 /* Overlay when drawer is open */

@@ -1,7 +1,7 @@
 import React from 'react';
 import '../../assets/css/modal/itemNotification.css';
 
-const NotificationItem = ({ date, title, message, image }) => {
+const NotificationItem = ({ date, time, title, message, image }) => {
   return (
     <div className="notification-item">
       {/* Image */}
@@ -13,10 +13,14 @@ const NotificationItem = ({ date, title, message, image }) => {
 
       {/* Content */}
       <div className="notification-content">
+          <span>
+          <span className="notification-date">{time}</span>
+
+          <span className="notification-date">    {date}</span><br />
+          </span>
         <div className="notification-header">
           {/* Title and Date */}
           <h4 className="notification-title">{title}</h4>
-          <span className="notification-date">{date}</span>
         </div>
 
         {/* Message */}

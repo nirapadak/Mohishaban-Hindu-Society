@@ -4,7 +4,7 @@ import { Route, Routes } from 'react-router-dom';
 import './assets/css/app.css';
 import About from './components/About';
 import { Navbar } from './components/Navbar';
-import Profile from './components/Profile';
+// import Profile from './components/Profile';
 import ProtectedAdminRoute from './components/ProtectedAdminRoute';
 import ProtectedRoute from './components/ProtectedRoute';
 import Dashboard from './pages/Dashboard';
@@ -41,7 +41,7 @@ function App() {
           <Route element={<ProtectedAdminRoute />}>
             <Route path='/dashboard' Component={Dashboard} />
           </Route>
-          <Route path='/profile' Component={Profile}/>
+          {/* <Route path='/profile' Component={Profile}/> */}
         </Route>
 
 

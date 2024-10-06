@@ -1,14 +1,17 @@
-import toast, { Toaster } from 'react-hot-toast';
+import { Toaster } from 'react-hot-toast';
 import { NavLink } from 'react-router-dom';
 import '../assets/css/navbar.css';
+
 import { IoIosNotifications } from 'react-icons/io';
 import { RiAccountCircleFill } from 'react-icons/ri';
 
 import NotificationDrawer from './NotificationDrawer';
 import { useState } from 'react';
+import ProfileDrawer from './ProfileDrawer';
 
 export const Navbar = ({ isLogined, userType }) => {
 
+  
 
   // function clearData() {
   //   localStorage.removeItem('auth_token');
@@ -19,9 +22,13 @@ export const Navbar = ({ isLogined, userType }) => {
   // }
 
   const [isDrawerOpen, setIsDrawerOpen] = useState(false);
+  const [isProfileOpen, setIsProfileOpen] = useState(false);
 
   const toggleDrawer = () => {
     setIsDrawerOpen(!isDrawerOpen);
+  };
+  const toggleProfileDrawer = () => {
+    setIsProfileOpen(!isProfileOpen);
   };
 
   return (
@@ -59,35 +66,42 @@ export const Navbar = ({ isLogined, userType }) => {
                     Dashboard
                   </NavLink>
                 </li>
-                <li>
+                {/* <li>
                   <NavLink to="/profile" className="nav-link">
                     Profile
                   </NavLink>
-                </li>
+                </li> */}
                 <li className="nav-link-icons">
                   <IoIosNotifications
                     className="nav-icons"
                     onClick={toggleDrawer}
                   />
-                 
+
                   <RiAccountCircleFill
                     className="nav-icons"
-                    onClick={toggleDrawer}
+                    onClick={toggleProfileDrawer}
                   />
                 </li>
               </>
             ) : (
               isLogined && (
                 <>
-                  <li>
+                  {/* <li>
                     <NavLink to="/profile" className="nav-link">
                       Profile
                     </NavLink>
-                  </li>
-                  
+                  </li> */}
+
                   <li>
                     <NavLink className="nav-link">
                       <IoIosNotifications onClick={toggleDrawer} />
+                    </NavLink>
+                  </li>
+                  <li>
+                    <NavLink className="nav-link">
+                      <RiAccountCircleFill
+                        onClick={toggleProfileDrawer}
+                      />
                     </NavLink>
                   </li>
                 </>
@@ -101,6 +115,10 @@ export const Navbar = ({ isLogined, userType }) => {
         </nav>
         <Toaster position="bottom-center" />
         <NotificationDrawer isOpen={isDrawerOpen} toggleDrawer={toggleDrawer} />
+        <ProfileDrawer
+          isOpen={isProfileOpen}
+          toggleProfileDrawer={toggleProfileDrawer}
+        />
       </header>
     </>
   );

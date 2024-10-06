@@ -38,7 +38,7 @@ exports.deleteUsersMuli = async(req, res) => {
   const { userIds } = req.body;
 
    // Validate each userId
-  const areValidIds = userIds.every(id => mongoose.Types.ObjectId.isValid(id));
+  const areValidIds = userIds.map((id) => new ObjectId.isValid(id));
   
   if (!areValidIds) {
     return res.status(400).json({
@@ -47,7 +47,7 @@ exports.deleteUsersMuli = async(req, res) => {
     });
   }
 
-  // Assuming you have a User model
+  
   UserModel.deleteMany({ _id: { $in: userIds } })
     .then(() => res.status(200).send({ message: 'Users deleted successfully' }))
     .catch(err => res.status(500).send({ message: 'Error deleting users', error: err }));

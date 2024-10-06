@@ -183,11 +183,11 @@ const Dashboard = () => {
   }
 
   //   // user edit =============================
-    function userEdit(id) {
-      console.log(id);
-      setModal(true);
-      return id;
-    }
+  function userEdit(id) {
+    console.log(id);
+    setModal(true);
+    return id;
+  }
   // modal close ============================
   function closeModalYes() {
     setModal(false);
@@ -241,6 +241,45 @@ const Dashboard = () => {
   const modalMassage = 'আপনি এই ব্যবহারকারী সম্পাদনা করতে চান?';
   const modalData = 'দুঃখিত আপনি এটি সম্পাদনা করবেন না ';
 
+  const [selectedUsers, setSelectedUsers] = useState([]); // Selected users for deletion
+
+  const toggleUserSelection = id => {
+    // Add or remove user from selectedUsers
+    console.log(id);
+    if (selectedUsers.includes(id)) {
+      setSelectedUsers(selectedUsers.filter(userId => userId !== id));
+    } else {
+      setSelectedUsers([...selectedUsers, id]);
+    }
+  };
+
+
+
+   const deleteSelectedUsers = () => {
+
+     if (selectedUsers.length > 0) {
+       axios
+         .delete('http://localhost:5000/api/v1/admin/delete/users', {
+           headers: {
+             'Content-Type': 'application/json',
+           },
+           data: { userIds: selectedUsers }, // Pass the selected user IDs
+         })
+         .then(response => {
+          console.log(response);
+           if (response.status === 200) {
+             toast.success('Selected users deleted successfully');
+             setUsers(users.filter(user => !selectedUsers.includes(user._id))); // Remove deleted users from the UI
+             setSelectedUsers([]); // Clear the selected users after deletion
+           }
+         })
+         .catch(error => {
+           console.error('Error:', error);
+         });
+     }
+   };
+
+
   return (
     <div className="container">
       {modal && (
@@ -267,6 +306,7 @@ const Dashboard = () => {
           onChange={e => setSearchTerm(e.target.value)}
           className="search-box"
         />
+        <button onClick={deleteSelectedUsers}>users Delete</button>
 
         {/* User Table */}
         <table className="user-table">
@@ -289,7 +329,11 @@ const Dashboard = () => {
               currentUsers.map((user, index) => (
                 <tr key={index}>
                   <td>
-                    <input type="checkbox" name="checkbox" className="check" />
+                    <input
+                      type="checkbox"
+                      checked={selectedUsers.includes(user._id)}
+                      onChange={() => toggleUserSelection(user._id)}
+                    />
                   </td>
                   <td>{indexOfFirstUser + index + 1}</td>
 
